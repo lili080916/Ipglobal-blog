@@ -2,15 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class Post extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory;
+
+    protected $table = 'posts';
 
     /*
     |------------------------------------------------------------------------------------
@@ -18,13 +17,9 @@ class User extends Authenticatable
     |------------------------------------------------------------------------------------
     */
     protected $fillable = [
-        'name',
-        'username',
-        'email',
-        'phone',
-        'website',
-        'address',
-        'company'
+        'user_id',
+        'title',
+        'body'
     ];
 
     /*
@@ -32,9 +27,9 @@ class User extends Authenticatable
     | relationships
     |------------------------------------------------------------------------------------
     */
-    // 1:m
-    public function posts()
+    // m:1
+    public function user()
     {
-        return $this->hasMany(Post::class);
+        return $this->belongsTo(User::class);
     }
 }

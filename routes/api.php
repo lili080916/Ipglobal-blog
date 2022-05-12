@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'posts'], function () {
+    Route::get('', 'PostController@getAllPosts')->name('api.post.index');
+    Route::get('{id}', 'PostController@getPostById')->name('api.post.show');
+    Route::post('', 'PostController@createPost')->name('api.post.store');
 });
