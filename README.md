@@ -7,58 +7,65 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+### PRUEBA TECNICA
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Se necesita una prueba piloto de un blog para uno de nuestros productos.
+Empezaremos con algo sencillo, sólo se quiere autores y posts. Se necesita acceder al contenido del blog desde otras aplicaciones, lo que nos requiere exponer una API. Como modelo de datos se propone usar el de https://jsonplaceholder.typicode.com/.
+Por tanto, este proyecto debe tener 2 secciones:
+**Blog público**
+- Lista de posts
+- Página de post, donde se mostrará una pequeña ficha del autor
+**API**
+- Endpoint GET para la obtención de posts (y en cada post incluir la información del autor)
+- Endpoint POST para la publicación de un post.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Tecnología y herramientas utilizadas
+**Backend**
+- PHP 8
+- Framework Laravel 9
+- Laravel Debugbar: herramienta para tener control de la app y debuggear la capa de acceso a datos.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### PASOS PARA EL DESPLIEGUE DE LA API
 
-## Learning Laravel
+Requerimientos mínimos:
+```requiere
+PHP 8
+Composer 2.*
+```
+Clonar la API del Github:
+`git clone https://github.com/lili080916/Ipglobal-blog.git`
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Comandos para iniciar el proyecto:
+```command
+composer install
+php artisan migrate
+php artisan db:seed
+```
+En el **.env** incluir la variable de entorno:
+`JSON_PLACEHOLDER_URL=`
+*Con el valor de la API dada.*
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Lógica seguida para el desarrollo de la API
 
-## Laravel Sponsors
+Para la implementación de la API deseada se hizo uso de la práctica de programación TDD. De forma general se implementaron:
+- Tests 
+- Request validate para validar los datos de entrada
+- Middleware Cors para validar peticiones al backend de servidores externos.
+- Seeder para cargar información a la BD. 
+*En este punto es necesario detallar que aunque no era objetivo de este ejercicio se creó uns BD en SQLlite para evitar otras configuraciones. Además de poder mostrar el trabajo con persistencia de datos, relaciones entre modelos y resource para mostrar datos en formato Json. 
+Para llenar los datos faker en vez de utilizar los factory de Laravel, se tomaron de la API recomenada viendose asi el trabajo con API externas mediante las peticiones HTTP .*
+- Traits para las peticiones HTTP para acceder de forma global, y tener acceso a estas funciones getUsersData() y getPostsData() que toman los datos de la API externa recomendada.
+- Resource y collections para la respuestas de datos con la estructura deseada.
+- ORM Eloquent para interacción con la capa de datos.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+En la raíz del proyecto, la carpeta **client http** puede importarse una collection de **Postsman** para interactuar con los endpoints desarrollados. 
 
-### Premium Partners
+Para acceder a la documentación de la API:
+`https://documenter.getpostman.com/view/19798850/UyxgK8Ec`
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+*Para la documentación decidí utilizar el cliente de Postman y la estructura que ofrece para acceder a los endpoint y la documentación que permite generar.*
 
-## Contributing
+**Tiempo estimado de implementación del Backend**
+Aproximadamente 2 horas( análisis del ejercicio e implentación del mismo).
+### Gracias
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
